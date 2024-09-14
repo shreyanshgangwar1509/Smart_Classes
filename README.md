@@ -38,4 +38,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 =======
 # Smart_Classes
 An website for smart classes management 
+Just a demo still connecting to backend in processing 
 >>>>>>> 5d60bec05e40fa7a2f99b8bfe622c4c3095fe51e
