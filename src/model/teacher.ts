@@ -28,7 +28,8 @@ export interface Teacher extends Document{
     verifyCode: string,
     verifyCOdeExpiry: Date,
     isverifiedd: boolean, 
-    resourses:typeof ResourseSchema[],
+    resourses: typeof ResourseSchema[],
+    role:string,
 }
 const TeacherSchema: Schema<Teacher> = new Schema({
     email: {
@@ -38,7 +39,10 @@ const TeacherSchema: Schema<Teacher> = new Schema({
         // email testing
         match:[/.+\@.+\..+/,'please use a valid email address ']
     },
-
+    role: {
+        type: String,
+        default:"teacher",
+    },
     username: {
         type: String,
         required: [true, "Username is reuired"],

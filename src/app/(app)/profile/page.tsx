@@ -1,9 +1,9 @@
 'use client'
 
+import Attendance from '@/components/ui/attendence';
 import defaultProfilePic from '@/image/logo.png'; // Default profile picture
 import Image from 'next/image';
 import { useState } from 'react';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Import the CSS for the calendar
 
 function Page() {
@@ -131,46 +131,7 @@ function Page() {
         )}
 
         {activeTab === 'attendance' && (
-          <div className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-            <h2 className="text-2xl text-black font-bold mb-4">Today's Attendance</h2>
-            {isCameraOpen ? (
-              <div>
-                <h3 className="text-lg font-semibold mb-2">Camera Interface (Simulated)</h3>
-                <p>Simulated camera interface for taking today's attendance.</p>
-                <button
-                  onClick={() => setIsCameraOpen(false)}
-                  className="bg-red-500 text-black p-2 rounded-lg mt-4 transition-transform transform hover:scale-105"
-                >
-                  Close Camera
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => setIsCameraOpen(true)}
-                className="bg-blue-500 text-black p-2 rounded-lg hover:bg-blue-600 transition-transform transform hover:scale-105"
-              >
-                Open Camera
-              </button>
-            )}
-            {/* Calendar component */}
-            {isCameraOpen && (
-              <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-2">Attendance Calendar</h3>
-                <Calendar
-                  onChange={handleDateChange}
-                  value={date}
-                  className="react-calendar"
-                />
-              </div>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'syllabus' && (
-          <div className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-            <h2 className="text-2xl text-black font-bold mb-4">Syllabus</h2>
-            <p>Details about the syllabus will go here.</p>
-          </div>
+          <Attendance/>
         )}
 
         {activeTab === 'classes' && (

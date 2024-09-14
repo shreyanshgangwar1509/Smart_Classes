@@ -138,6 +138,7 @@
 'use client'
 
 import img from '@/image/shreyansh.jpg';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 // Sample teacher data with images
 const initialTeachers = [
@@ -147,6 +148,7 @@ const initialTeachers = [
 ];
 
 function Page() {
+  const role = useParams();
   const [teachers, setTeachers] = useState(initialTeachers);
   const [newTeacher, setNewTeacher] = useState({ name: '', subject: '', image: '' });
   const [editingTeacher, setEditingTeacher] = useState(null);
@@ -191,9 +193,9 @@ function Page() {
 
   return (
     <div className="p-8 min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-4">Teacher Portfolio</h1>
+      <h1 className="text-2xl text-black font-bold mb-4">Teacher Portfolio</h1>
 
-      <div className="mb-8 p-4 bg-white shadow-md rounded">
+      {(role==='teacher')?(<div className="mb-8 p-4 bg-white shadow-md rounded">
         <h2 className="text-xl font-semibold mb-4">Add New Teacher</h2>
         <input
           type="text"
@@ -228,7 +230,7 @@ function Page() {
         >
           Add Teacher
         </button>
-      </div>
+      </div>):(<h1 className='text-black text-bold text-center text-2xl mb-4'>Teachers List</h1>)}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {teachers.map((teacher) => (

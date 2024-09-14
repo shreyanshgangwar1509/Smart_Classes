@@ -17,26 +17,13 @@ function Navbar() {
               Home
             </Button>
           </Link>
-          <Link href="/resources">
-            <Button className="bg-white text-indigo-600 px-4 py-2 rounded-full shadow-md hover:bg-indigo-600 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">
-              Resources
-            </Button>
-          </Link>
-          <Link href="/classes">
-            <Button className="bg-white text-indigo-600 px-4 py-2 rounded-full shadow-md hover:bg-indigo-600 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">
-              Classes
-            </Button>
-          </Link>
+          
           <Link href="/teachers">
             <Button className="bg-white text-indigo-600 px-4 py-2 rounded-full shadow-md hover:bg-indigo-600 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">
               Teachers
             </Button>
           </Link>
-          <Link href="/profile">
-            <Button className="bg-white text-indigo-600 px-4 py-2 rounded-full shadow-md hover:bg-indigo-600 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">
-              Profile
-            </Button>
-          </Link>
+          
           <Link href="/sign-in">
             <Button className="bg-white text-pink-600 px-5 py-2 rounded-full shadow-md hover:bg-pink-600 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">
               Login

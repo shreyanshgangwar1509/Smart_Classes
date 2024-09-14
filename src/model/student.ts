@@ -1,10 +1,10 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-// export interface Resourse extends Document{
-//     title:string,
-//     content: string,
-//     createdAt:Date,
-// }
+export interface Resourse extends Document{
+    title:string,
+    content: string,
+    createdAt:Date,
+}
 // const ResourseSchemaSchema: Schema<Resourse> = new Schema({
 //     title: {
 //         typr: String,
@@ -24,10 +24,12 @@ export interface Student extends Document{
     username: string,
     email: string,
     password: string,
-    class:string,
+    classes:string,
     verifyCode: string,
     verifyCOdeExpiry: Date,
-    isverifiedd:boolean, 
+    isverifiedd: boolean, 
+    role:string,
+    
 }
 const StudentSchema: Schema<Student> = new Schema({
     email: {
@@ -37,7 +39,10 @@ const StudentSchema: Schema<Student> = new Schema({
         // email testing
         match:[/.+\@.+\..+/,'please use a valid email address ']
     },
-
+    role: {
+        type: String,
+        default:"student",
+    },
     username: {
         type: String,
         required: [true, "Username is reuired"],
@@ -48,7 +53,7 @@ const StudentSchema: Schema<Student> = new Schema({
         type: String,
         required: [true, "password is required"],
     },
-    class: {
+    classes: {
         type: String,
         required: [true,"Class is required"],
     },
@@ -65,6 +70,8 @@ const StudentSchema: Schema<Student> = new Schema({
         default:false,
         
     },
+
+    // todo: in this generailise it by role as student,teacher,new user , and add isteacher to access resources
 })
 
 const StudentModel = mongoose.models.Student as mongoose.Model<Student> || mongoose.model<Student>("Student",StudentSchema)
