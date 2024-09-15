@@ -1,75 +1,78 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-export interface Resourse extends Document{
-    title:string,
-    content: string,
-    createdAt:Date,
+// Define the Resourse interface and schema
+export interface Resourse extends Document {
+    title: string;
+    content: string;
+    createdAt: Date;
 }
+
 const ResourseSchema: Schema<Resourse> = new Schema({
     title: {
-        typr: String,
-        required:true
+        type: String,
+        required: true,
     },
     content: {
         type: String,
-        required:true
+        required: true,
     },
     createdAt: {
         type: Date,
         required: true,
-        default:Date.now
-    }
-})
-export interface Teacher extends Document{
-    username: string,
-    email: string,
-    password: string,
-    class:string,
-    verifyCode: string,
-    verifyCOdeExpiry: Date,
-    isverifiedd: boolean, 
-    resourses: typeof ResourseSchema[],
-    role:string,
+        default: Date.now, // Function reference
+    },
+});
+
+// Define the Teacher interface and schema
+export interface Teacher extends Document {
+    username: string;
+    email: string;
+    password: string;
+    class: string;
+    verifyCode: string;
+    verifyCOdeExpiry: Date;
+    isverifiedd: boolean;
+    resourses: Resourse[];
+    role: string;
 }
+
 const TeacherSchema: Schema<Teacher> = new Schema({
     email: {
         type: String,
-        required: [true, "email is reuired"],
+        required: [true, "Email is required"],
         unique: true,
-        // email testing
-        match:[/.+\@.+\..+/,'please use a valid email address ']
+        match: [/.+\@.+\..+/, 'Please use a valid email address'],
     },
     role: {
         type: String,
-        default:"teacher",
+        default: "teacher",
     },
     username: {
         type: String,
-        required: [true, "Username is reuired"],
+        required: [true, "Username is required"],
         unique: true,
-        trim:true,
+        trim: true,
     },
     password: {
         type: String,
-        required: [true, "password is required"],
+        required: [true, "Password is required"],
     },
-    
     verifyCode: {
         type: String,
-        required: [true, "verifycode is reuired"],
+        required: [true, "Verification code is required"],
     },
     verifyCOdeExpiry: {
         type: Date,
-        required: [true, "verifycodeexpiry  is required"],
+        required: [true, "Verification code expiry is required"],
     },
     isverifiedd: {
         type: Boolean,
-        default:false,
-        
+        default: false,
     },
-    resourses: [ResourseSchema],
-})
+    resourses: [ResourseSchema], // Correctly use the ResourseSchema
+});
 
-const TeacherModel = mongoose.models.Teacher as mongoose.Model<Teacher> || mongoose.model<Teacher>("Teacher",TeacherSchema)
+// Ensure model is not redefined in hot reload environments
+const TeacherModel = mongoose.models.Teacher || mongoose.model<Teacher>("Teacher", TeacherSchema);
 
 export default TeacherModel;

@@ -1,5 +1,6 @@
 import { dbconnect } from "@/lib/dbconnect";
 import StudentModel from "@/model/student";
+import TeacherModel from "@/model/teacher";
 
 export async function POST(request: Request) {
     await dbconnect()
@@ -7,9 +8,9 @@ export async function POST(request: Request) {
     try {
         const { username, code } = await request.json();
         const decodedusername = decodeURIComponent(username);
-        const user = await StudentModel.findOne({ username: decodedusername })
-        
-        if (!user) {
+        const student = await StudentModel.findOne({ username: decodedusername })
+        const teacher = await TeacherModel.findOne({ username: decodedusername })
+        if (!student && !teacher) {
             return Response.json(
                 {
                     succcess: false,
@@ -19,6 +20,11 @@ export async function POST(request: Request) {
                 }
             )
         }
+        let user;
+        if (student) {
+            user = student;
+        }
+        else { user = teacher; }
 
         const isCodeValid = user.verifyCode == code
         const isCodeNotExpired = new Date(user.verifyCOdeExpiry) > new Date()

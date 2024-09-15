@@ -1,0 +1,164 @@
+{
+  "classes": [
+    {
+      "class": "1",
+      "subjects": [
+        {
+          "title": "Mathematics",
+          "topics": [
+            "Numbers and Counting",
+            "Addition and Subtraction",
+            "Shapes and Patterns",
+            "Time and Measurement"
+          ]
+        },
+        {
+          "title": "English",
+          "topics": [
+            "Alphabet Recognition",
+            "Simple Words and Sentences",
+            "Rhymes and Poems",
+            "Basic Grammar"
+          ]
+        },
+        {
+          "title": "Science",
+          "topics": [
+            "Living and Non-Living Things",
+            "Animals and Plants",
+            "The Five Senses",
+            "Weather and Seasons"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "2",
+      "subjects": [
+        {
+          "title": "Mathematics",
+          "topics": [
+            "Numbers up to 100",
+            "Addition and Subtraction",
+            "Introduction to Multiplication",
+            "Basic Geometry"
+          ]
+        },
+        {
+          "title": "English",
+          "topics": [
+            "Reading and Comprehension",
+            "Nouns, Pronouns, and Verbs",
+            "Simple Sentences",
+            "Poetry and Short Stories"
+          ]
+        },
+        {
+          "title": "Science",
+          "topics": [
+            "Plants and Their Parts",
+            "Animals and Their Homes",
+            "Weather and Climate",
+            "Water and Its Uses"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "3",
+      "subjects": [
+        {
+          "title": "Mathematics",
+          "topics": [
+            "Place Value",
+            "Addition and Subtraction of Larger Numbers",
+            "Introduction to Division",
+            "Fractions"
+          ]
+        },
+        {
+          "title": "English",
+          "topics": [
+            "Parts of Speech",
+            "Reading Comprehension",
+            "Writing Simple Paragraphs",
+            "Basic Grammar and Vocabulary"
+          ]
+        },
+        {
+          "title": "Science",
+          "topics": [
+            "Living and Non-Living Things",
+            "The Human Body",
+            "Food and Nutrition",
+            "Energy and Light"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "4",
+      "subjects": [
+        {
+          "title": "Mathematics",
+          "topics": [
+            "Multiplication and Division",
+            "Fractions and Decimals",
+            "Time and Calendar",
+            "Basic Data Handling"
+          ]
+        },
+        {
+          "title": "English",
+          "topics": [
+            "Advanced Reading Comprehension",
+            "Grammar: Tenses and Prepositions",
+            "Creative Writing",
+            "Poems and Prose"
+          ]
+        },
+        {
+          "title": "Science",
+          "topics": [
+            "Plants: Photosynthesis and Reproduction",
+            "Animals: Classification and Habitats",
+            "Matter and Materials",
+            "Force, Work, and Energy"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "5",
+      "subjects": [
+        {
+          "title": "Mathematics",
+          "topics": [
+            "Factors and Multiples",
+            "Fractions, Decimals, and Percentages",
+            "Geometry: Angles and Shapes",
+            "Introduction to Algebra"
+          ]
+        },
+        {
+          "title": "English",
+          "topics": [
+            "Reading Comprehension",
+            "Advanced Grammar and Punctuation",
+            "Story Writing",
+            "Poetry Appreciation"
+          ]
+        },
+        {
+          "title": "Science",
+          "topics": [
+            "The Solar System",
+            "Human Body Systems",
+            "Simple Machines",
+            "Environmental Conservation"
+          ]
+        }
+      ]
+    }
+  ]
+}

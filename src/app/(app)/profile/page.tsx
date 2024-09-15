@@ -1,17 +1,23 @@
 'use client'
 
 import Attendance from '@/components/ui/attendence';
-import defaultProfilePic from '@/image/logo.png'; // Default profile picture
+import pic from '@/image/shreyansh.jpg';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // Import the CSS for the calendar
-
 function Page() {
+  const { data: session } = useSession()
+
   const [profile, setProfile] = useState({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    profilePicture: defaultProfilePic.src, // Default image
-  });
+    name: session?.user.username,
+    email:session?.user.email,
+    profilePicture: pic.src,
+ })
+    
+
+  
+  // her an axios get reQuest to get-details route to get details about user and then show
   const [isEditing, setIsEditing] = useState(false);
   const [editProfile, setEditProfile] = useState({ ...profile });
   const [date, setDate] = useState(new Date());
@@ -44,8 +50,8 @@ function Page() {
     }
   };
 
-  return (
-    <div className="flex min-h-screen bg-gray-100">
+  return !session ?  <p>Loading...</p>: (
+      <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <aside className="w-1/4 p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg">
         <h2 className="text-2xl text-black font-bold text-black mb-6">Menu</h2>
@@ -77,8 +83,10 @@ function Page() {
                 height={128}
               />
               <div className="ml-6">
-                <h2 className="text-2xl text-black font-semibold mb-2">{profile.name}</h2>
-                <p className="text-gray-700 text-lg">{profile.email}</p>
+                <h2 className="text-2xl text-black font-semibold mb-2">{session.user.username}</h2>
+                <p className="text-gray-700 text-lg">{session.user.email}</p>
+                <p className="text-gray-700 text-lg">{session.user.role}</p>
+                <p>Verified: {session.user.isVerified ? "Yes" : "No"}</p>
               </div>
             </div>
 
