@@ -1,28 +1,44 @@
-'use client'
+'use client';
 
 import Attendance from '@/components/ui/attendence';
-import pic from '@/image/shreyansh.jpg';
+import pic1 from '@/image/picsmart2.webp'; // Import the default profile picture if needed
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // Import the CSS for the calendar
+
 function Page() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession(); // Get session data
+  const router = useRouter();
 
   const [profile, setProfile] = useState({
-    name: session?.user.username,
-    email:session?.user.email,
-    profilePicture: pic.src,
- })
-    
+    name: '',
+    email: '',
+    profilePicture: pic1.src, // Default profile picture
+    role: '',
+    isVerified: false,
+  });
 
-  
-  // her an axios get reQuest to get-details route to get details about user and then show
+  useEffect(() => {
+    if (session) {
+      // Populate user details from the session
+      setProfile({
+        name: session.user.name || '',
+        email: session.user.email || '',
+        profilePicture: session.user.image || pic1.src, // Use session image or fallback to default
+        role: session.user.role || '',
+        isVerified: session.user.isVerified || false,
+      });
+    } 
+    // else if (status === 'unauthenticated') {
+    //   router.push('/sign-in'); // Redirect to sign-in if the user is not authenticated
+    // }
+  }, [session, status, router]);
+
   const [isEditing, setIsEditing] = useState(false);
   const [editProfile, setEditProfile] = useState({ ...profile });
-  const [date, setDate] = useState(new Date());
   const [activeTab, setActiveTab] = useState('profile');
-  const [isCameraOpen, setIsCameraOpen] = useState(false);
 
   const handleProfileChange = (e:any) => {
     const { name, value } = e.target;
@@ -39,28 +55,27 @@ function Page() {
     setIsEditing(false);
   };
 
-  const handleDateChange = (newDate:any) => {
-    setDate(newDate);
-  };
-
   const handleTabClick = (tab:any) => {
     setActiveTab(tab);
-    if (tab === 'attendance') {
-      setIsCameraOpen(true);
-    }
   };
 
-  return !session ?  <p>Loading...</p>: (
-      <div className="flex min-h-screen bg-gray-100">
+  if (status === 'loading') {
+    return <p>Loading...</p>; // Show a loading message while fetching the session
+  }
+
+  return (
+    <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <aside className="w-1/4 p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg">
-        <h2 className="text-2xl text-black font-bold text-black mb-6">Menu</h2>
+        <h2 className="text-2xl text-black font-bold mb-6">Menu</h2>
         <ul className="space-y-4">
-          {['profile', 'attendance', 'syllabus', 'classes'].map(tab => (
+          {['profile', 'attendance', 'syllabus', 'classes'].map((tab) => (
             <li
               key={tab}
               onClick={() => handleTabClick(tab)}
-              className={`cursor-pointer text-lg font-semibold text-black transition-transform transform hover:scale-105 ${activeTab === tab ? 'text-yellow-200' : ''}`}
+              className={`cursor-pointer text-lg font-semibold text-black transition-transform transform hover:scale-105 ${
+                activeTab === tab ? 'text-yellow-200' : ''
+              }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </li>
@@ -72,7 +87,7 @@ function Page() {
       <main className="w-3/4 p-8">
         {activeTab === 'profile' && (
           <div className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-            <h1 className="text-3xl font-bold mb-4">Profile</h1>
+            <h1 className="text-3xl text-black font-bold mb-4">Profile</h1>
 
             <div className="flex items-center mb-8">
               <Image
@@ -82,17 +97,17 @@ function Page() {
                 width={128}
                 height={128}
               />
-              <div className="ml-6">
-                <h2 className="text-2xl text-black font-semibold mb-2">{session.user.username}</h2>
-                <p className="text-gray-700 text-lg">{session.user.email}</p>
-                <p className="text-gray-700 text-lg">{session.user.role}</p>
-                <p>Verified: {session.user.isVerified ? "Yes" : "No"}</p>
+              <div className="ml-6 text-black">
+                <h2 className="text-2xl text-black font-semibold mb-2">{profile.name}</h2>
+                <p className="text-gray-700 text-black text-lg">{profile.email}</p>
+                <p className="text-gray-700  text-blacktext-lg">{profile.role}</p>
+                <p>Verified: {profile.isVerified ? 'Yes' : 'No'}</p>
               </div>
             </div>
 
             {isEditing ? (
               <div>
-                <div className="mb-4">
+                <div className="mb-4 text-black">
                   <label className="block text-gray-700 text-lg">Name</label>
                   <input
                     type="text"
@@ -103,12 +118,12 @@ function Page() {
                     className="border border-gray-300 p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-transform transform hover:scale-105"
                   />
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 text-black">
                   <label className="block text-gray-700 text-lg">Email</label>
                   <input
                     type="email"
                     name="email"
-                    value={editProfile.email}
+                    value={editProfile.email || ''}
                     onChange={handleProfileChange}
                     placeholder="Email"
                     className="border border-gray-300 p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-transform transform hover:scale-105"
@@ -138,14 +153,12 @@ function Page() {
           </div>
         )}
 
-        {activeTab === 'attendance' && (
-          <Attendance/>
-        )}
+        {activeTab === 'attendance' && <Attendance />}
 
         {activeTab === 'classes' && (
           <div className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105">
             <h2 className="text-2xl text-black font-bold mb-4">Classes</h2>
-            <p className=" text-black  mb-4">Details about the classes will go here.</p>
+            <p className="text-black mb-4">Details about the classes will go here.</p>
           </div>
         )}
       </main>

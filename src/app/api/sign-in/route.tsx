@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
         if (student || teacher) {
             // Redirect to a URL with the username in the path
-            return NextResponse.redirect(`/profile/${username}`);
+            return NextResponse.redirect(`/profile`);
         } else {
             return NextResponse.json({
                 success: false,

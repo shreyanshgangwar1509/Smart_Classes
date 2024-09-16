@@ -137,7 +137,7 @@
 // export default Page;
 
 'use client'
-import img from '@/./image/shreyansh.jpg';
+import img from '@/./image/teacher.jpeg';
 import { useParams } from "next/navigation";
 import { useState } from "react";
 interface Teacher {
@@ -200,9 +200,9 @@ function Page() {
     <div className="p-8 min-h-screen bg-gray-100">
       <h1 className="text-2xl text-black font-bold mb-4">Teacher Portfolio</h1>
 
-      {(role === 'teacher') ? (
+      
         <div className="mb-8 p-4 bg-white shadow-md rounded">
-          <h2 className="text-xl font-semibold mb-4">Add New Teacher</h2>
+          <h2 className="text-xl font-semibold text-black mb-4">Add New Teacher</h2>
           <input
             type="text"
             value={newTeacher.name || ''}
@@ -237,9 +237,9 @@ function Page() {
             Add Teacher
           </button>
         </div>
-      ) : (
+      
         <h1 className='text-black text-bold text-center text-2xl mb-4'>Teachers List</h1>
-      )}
+      
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {teachers.map((teacher:Teacher) => (
@@ -252,7 +252,7 @@ function Page() {
               />
             )}
             <div>
-              <h3 className="text-xl font-semibold">{teacher.name}</h3>
+              <h3 className="text-xl text-black font-semibold">{teacher.name}</h3>
               <p className="text-gray-700">Subject: {teacher.subject}</p>
               <button
                 onClick={() => handleEditTeacher(teacher.id)}

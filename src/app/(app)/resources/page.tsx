@@ -132,9 +132,9 @@ function Page() {
       <div className="w-3/4 p-4 bg-white bg-opacity-80">
         {selectedSubject ? (
           <div>
-            <h2 className="text-2xl font-semibold mb-4">{selectedSubject}</h2>
-            <h3 className="text-xl font-semibold mb-2">Topics</h3>
-            <ul className="list-disc list-inside">
+            <h2 className="text-2xl text-black font-semibold mb-4">{selectedSubject}</h2>
+            <h3 className="text-xl text-black font-semibold mb-2">Topics</h3>
+            <ul className="list-disc text-black list-inside">
               {subjectsData.classes.find(cls => cls.class === selectedClass)
                 ?.subjects.find(subj => subj.title === selectedSubject)
                 ?.topics.map(topic => (
