@@ -31,7 +31,7 @@ export interface Teacher extends Document {
     class: string;
     verifyCode: string;
     verifyCOdeExpiry: Date;
-    isverifiedd: boolean;
+    isverified: boolean;
     resourses: Resourse[];
     role: string;
 }
@@ -65,7 +65,7 @@ const TeacherSchema: Schema<Teacher> = new Schema({
         type: Date,
         required: [true, "Verification code expiry is required"],
     },
-    isverifiedd: {
+    isverified: {
         type: Boolean,
         default: false,
     },

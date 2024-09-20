@@ -9,13 +9,13 @@ export async function POST(request: Request) {
   await dbconnect(); // Ensure database connection
   
   try {
-    const { username, email, password ,classes,selectedRole} = await request.json(); // Parse the request body
-    const verifyCode = Math.floor(10000 + Math.random() * 900000).toString();
+    const { username, email, password ,classes,role} = await request.json(); // Parse the request body
+    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
     // Check if the username already exists and is verified
-    if (selectedRole == 'student') {
+    if (role == 'student') {
       const existuserIsVerifiedByusername = await StudentModel.findOne({
         username,
-        isverifiedd: true,
+        isverified: true,
       });
       if (existuserIsVerifiedByusername) {
         return NextResponse.json(
@@ -31,10 +31,10 @@ export async function POST(request: Request) {
       // Check if the email already exists and is verified
       const existinguserByEmail = await StudentModel.findOne({
         email,
-        isverifiedd: true,
+        isverified: true,
       });
       if (existinguserByEmail) {
-        if (existinguserByEmail.isverifiedd) {
+        if (existinguserByEmail.isverified) {
           return NextResponse.json(
             {
               success: false,
@@ -56,15 +56,15 @@ export async function POST(request: Request) {
         const expiryDate = new Date();
         expiryDate.setHours(expiryDate.getHours() + 1); // Set expiry to 1 hour
 
-        const newUser = new TeacherModel({
+        const newUser = new StudentModel({
           username,
           email,
           classes,
-          role:selectedRole,
+          role:role,
           password: hashedPassword,
           verifyCOdeExpiry: expiryDate,
           verifyCode,
-          isverifiedd: false,
+          isverified: false,
         });
 
         await newUser.save();
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
     else {
       const existuserIsVerifiedByusername = await TeacherModel.findOne({
         username,
-        isverifiedd: true,
+        isverified: true,
       });
 
       if (existuserIsVerifiedByusername) {
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
       // Check if the email already exists and is verified
       const existinguserByEmail = await TeacherModel.findOne({
         email,
-        isverifiedd: true,
+        isverified: true,
       });
       if (existinguserByEmail) {
         if (existinguserByEmail.isverifiedd) {
@@ -120,8 +120,7 @@ export async function POST(request: Request) {
         const newUser = new TeacherModel({
           username,
           email,
-          classes,
-          role:selectedRole,
+          role:role,
           password: hashedPassword,
           verifyCOdeExpiry: expiryDate,
           verifyCode,

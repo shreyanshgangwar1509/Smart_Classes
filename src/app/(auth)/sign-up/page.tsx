@@ -241,6 +241,7 @@
 // //     // Navigate to the new URL
 // //     router.push(url);
 // //   };
+
 'use client';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/Form';
@@ -265,7 +266,8 @@ function Page() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
-
+  
+  // const [role, setrole] = useState("");
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -273,13 +275,17 @@ function Page() {
       email: '',
       password: '',
       classes: '',
-      role: '',
+      role: 'student',
     },
   });
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
+    console.log(form.getValues()); // Add this line to debug the values being submitted
+
     setIsSubmitting(true);
     try {
+      console.log(data);
+      
       const response = await axios.post<ApiResponse>('/api/sign-up', data);
       toast({
         title: 'Success',

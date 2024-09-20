@@ -46,13 +46,13 @@ function Page() {
       return;
     }
 
-    const params = new URLSearchParams({
-      username: data.identifier,
-      role: selectedRole,
-    });
+    // const params = new URLSearchParams({
+      // username: data.identifier,
+      // role: selectedRole,
+    // });
 
     const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const callbackUrl = `${baseUrl}/profile?${params.toString()}`;
+    const callbackUrl = `/profile`;
 
     console.log('Constructed callbackUrl:', callbackUrl);
 
@@ -60,7 +60,7 @@ function Page() {
       redirect: true, // Do not auto-redirect; handle manually
       identifier: data.identifier,
       password: data.password,
-      callbackUrl,
+      callbackUrl
     });
 
     if (result?.error) {
@@ -69,9 +69,10 @@ function Page() {
         description: result.error,
         variant: "destructive",
       });
-    } else if (result?.url) {
-      router.push(result.url); // Redirect to the constructed URL
     }
+    // else if (result?.url) {
+    //   router.push(result.url); // Redirect to the constructed URL
+    // }
 
     setIsSubmitting(false);
   };

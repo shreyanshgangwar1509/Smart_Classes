@@ -1,8 +1,13 @@
 'use client'
 import pic1 from '@/image/science-related-objects-design-J51CJM.jpg'; // Adjust the path as needed
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 function HomePage() {
+   const { data: session, status } = useSession();
+
+  console.log('Session:', session);
+  console.log('Status:', status);
   const [showDetails, setShowDetails] = useState(false);
 
   const toggleDetails = () => {
@@ -19,7 +24,7 @@ function HomePage() {
         filter: 'brightness(70%)',
       }}
     >
-      <div className="bg-white bg-opacity-80 p-6 rounded-lg shadow-lg text-center">
+      <div className="bg-white text-black bg-opacity-80 p-6 rounded-lg shadow-lg text-center">
         <h1 className="text-3xl font-bold mb-4">Welcome to Our Site!</h1>
         <p className="text-lg mb-4">Explore our content and get to know more about us.</p>
         <button

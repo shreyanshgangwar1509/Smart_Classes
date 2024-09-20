@@ -1,20 +1,21 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
-export const usernameValidation = z
-    .string()
-    .min(2, "Username must be atleast 2 charcaters")
-    .max(20, "Usernaem must be at most 20 character")
-    .regex(/^[a-zA-Z0-9_]+$/, "Usrname must not conatain special cahracter ")
-
-export const classvalidation = z.string()
-    .min(1, "Class must be grater than first class")
-    .max(12, "At most class is 12th")
-    
 export const signUpSchema = z.object({
-    username: usernameValidation,
-    email: z.string().email({message:'Invalid email address'}),
-    password: z.string().min(6, { message: "password must be atleast 6 character" }),
-    classes: classvalidation,
-    role: z.string(),
-})
-
+  username: z
+    .string()
+    .min(2, "Username must be at least 2 characters")
+    .max(20, "Username must be at most 20 characters")
+    .regex(/^[a-zA-Z0-9_]+$/, "Username must not contain special characters"),
+  email: z.string().email({ message: 'Invalid email address' }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  role: z.enum(['teacher', 'student']),
+  classes: z.string().optional(),
+}).superRefine((data, ctx) => {
+  if (data.role === 'student' && !data.classes) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Class is required for students",
+      path: ['classes'],
+    });
+  }
+});
