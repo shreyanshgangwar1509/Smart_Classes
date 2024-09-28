@@ -9,9 +9,10 @@ import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // Import the CSS for the calendar
 
 function Page() {
-  const { data: session, status } = useSession(); // Get session data
   const router = useRouter();
-
+  const { data: session, status } = useSession(); // Get session data with status
+  
+  // Profile data
   const [profile, setProfile] = useState({
     name: '',
     email: '',
@@ -21,26 +22,29 @@ function Page() {
   });
 
   useEffect(() => {
+    if (status === 'loading') {
+      return; // While loading, don't do anything
+    }
+
     if (session) {
-      // Populate user details from the session
+      // Populate user details from the session if authenticated
       setProfile({
-        name: session.user.name || '',
+        name: session.user.username || 'Shrey',
         email: session.user.email || '',
         profilePicture: session.user.image || pic1.src, // Use session image or fallback to default
         role: session.user.role || '',
         isVerified: session.user.isVerified || false,
       });
-    } 
-    // else if (status === 'unauthenticated') {
-    //   router.push('/sign-in'); // Redirect to sign-in if the user is not authenticated
-    // }
+    } else if (status === 'unauthenticated') {
+      router.push('/sign-in'); // Redirect to sign-in if the user is not authenticated
+    }
   }, [session, status, router]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editProfile, setEditProfile] = useState({ ...profile });
   const [activeTab, setActiveTab] = useState('profile');
 
-  const handleProfileChange = (e:any) => {
+  const handleProfileChange = (e: any) => {
     const { name, value } = e.target;
     setEditProfile({ ...editProfile, [name]: value });
   };
@@ -55,13 +59,9 @@ function Page() {
     setIsEditing(false);
   };
 
-  const handleTabClick = (tab:any) => {
+  const handleTabClick = (tab: any) => {
     setActiveTab(tab);
   };
-
-  if (status === 'loading') {
-    return <p>Loading...</p>; // Show a loading message while fetching the session
-  }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -69,7 +69,7 @@ function Page() {
       <aside className="w-1/4 p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg">
         <h2 className="text-2xl text-black font-bold mb-6">Menu</h2>
         <ul className="space-y-4">
-          {['profile', 'attendance', 'syllabus', 'classes'].map((tab) => (
+          {['profile', 'attendance', 'syllabus', 'classes', 'Addclass'].map((tab) => (
             <li
               key={tab}
               onClick={() => handleTabClick(tab)}
@@ -98,9 +98,9 @@ function Page() {
                 height={128}
               />
               <div className="ml-6 text-black">
-                <h2 className="text-2xl text-black font-semibold mb-2">{profile.name}</h2>
-                <p className="text-gray-700 text-black text-lg">{profile.email}</p>
-                <p className="text-gray-700  text-blacktext-lg">{profile.role}</p>
+                <h2 className="text-2xl text-black font-semibold mb-2">Name: {profile.name}</h2>
+                <p className="text-gray-700 text-black text-lg">Email : {profile.email}</p>
+                <p className="text-gray-700 text-black text-lg">Role: {profile.role}</p>
                 <p>Verified: {profile.isVerified ? 'Yes' : 'No'}</p>
               </div>
             </div>
@@ -159,6 +159,13 @@ function Page() {
           <div className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105">
             <h2 className="text-2xl text-black font-bold mb-4">Classes</h2>
             <p className="text-black mb-4">Details about the classes will go here.</p>
+          </div>
+        )}
+
+        {activeTab === 'Addclass' && (
+          <div className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+            <h2 className="text-2xl text-black font-bold mb-4">Add Class</h2>
+            <p className="text-black mb-4">Implement this later on ... </p>
           </div>
         )}
       </main>

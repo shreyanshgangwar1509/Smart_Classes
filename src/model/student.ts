@@ -28,7 +28,8 @@ export interface Student extends Document{
     verifyCode: string,
     verifyCOdeExpiry: Date,
     isverified: boolean, 
-    role:string,
+    role: string,
+    attendance: Date,
     
 }
 const StudentSchema: Schema<Student> = new Schema({
@@ -70,6 +71,7 @@ const StudentSchema: Schema<Student> = new Schema({
         default:false,
         
     },
+    attendance: [Date],
 
     // todo: in this generailise it by role as student,teacher,new user , and add isteacher to access resources
 })

@@ -7,6 +7,7 @@ import { verifySchema } from '@/schemas/verifySchema';
 import { ApiResponse } from '@/types/ApiResponse';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios, { AxiosError } from 'axios';
+import { signIn } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -25,11 +26,22 @@ const VerifyAccount = () => {
         username: param.username,
         code:data.code
       })
+     const userdata = await response.data;
+    if (userdata.success) {
+      // After successful verification, force session refresh
+      await signIn('credentials', {
+        redirect: false, // Prevent redirect, refresh session instead
+        callbackUrl: window.location.href, // Current page
+      });
+      console.log('User verified and session updated.');
+    } else {
+      console.error('Verification failed:');
+    }
       toast({
         title: "Success",
         description: response.data.message||"User verified "
       })
-      router.replace('/home')
+      router.replace('/sign-in')
     } catch (error) {
       console.error("Error in singing up ", error);
       const axiosError = error as AxiosError<ApiResponse>;

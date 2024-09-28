@@ -50,14 +50,22 @@ function Page() {
       // username: data.identifier,
       // role: selectedRole,
     // });
+    // sessionStorage.setItem('username', data.identifier);
+    // const username = await StudentModel.find({
+    //   $or: [
+    //     { email: data.identifier },      // Correctly wrapped in an object
+    //     { username: data.identifier },     // Correctly wrapped in an object
+    //     { password: data.password }      // Correct the spelling from 'passeord' to 'password'
+    //   ]
+    // });
 
     const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const callbackUrl = `/profile`;
+    const callbackUrl = `${baseUrl}/${data.identifier}/profile`;
 
     console.log('Constructed callbackUrl:', callbackUrl);
 
     const result = await signIn('credentials', {
-      redirect: true, // Do not auto-redirect; handle manually
+      redirect: false, // Do not auto-redirect; handle manually
       identifier: data.identifier,
       password: data.password,
       callbackUrl
@@ -70,9 +78,9 @@ function Page() {
         variant: "destructive",
       });
     }
-    // else if (result?.url) {
-    //   router.push(result.url); // Redirect to the constructed URL
-    // }
+    else if (result?.url) {
+      router.push(result.url); // Redirect to the constructed URL
+    }
 
     setIsSubmitting(false);
   };

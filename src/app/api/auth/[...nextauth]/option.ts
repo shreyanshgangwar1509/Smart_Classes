@@ -5,7 +5,6 @@ import TeacherModel from "@/model/teacher";
 import bcryptjs from "bcryptjs";
 import { NextAuthOptions } from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
-import { getSession } from "next-auth/react";
 
 export const authOptions: NextAuthOptions = {
   
@@ -88,7 +87,7 @@ export const authOptions: NextAuthOptions = {
         token.role = user.role;
         token.username = user.username;
       }
-      // console.log(token);
+      // console.log(token.isVerified);
       return token;
       
     },
@@ -101,24 +100,24 @@ export const authOptions: NextAuthOptions = {
         session.user.role = token.role;
         session.user.username = token.username;
       }
-      // console.log("session  = " + session);
+      // console.log("session  = " + session.user);
       
       return session;
     },
-    async redirect({ url, baseUrl }) {
+    // async redirect({ url, baseUrl }) {
     //  console.log('Redirect URL:', url);
     // console.log('Base URL:', baseUrl);
 
-    const session = await getSession();
+    // const session = await getSession();
     // console.log('Session:', session);
     
-      if (session?.user?.username) {
-        return `${baseUrl}/${session.user.username}/profile`;
-      }
+      // if (session?.user?.username) {
+      //   return `${baseUrl}/${session.user.username}/profile`;
+      // }
 
       // Default to home if username is not available
-      return baseUrl;
-    },
+      // return baseUrl;
+    // },
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

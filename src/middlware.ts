@@ -41,7 +41,9 @@ export const config = {
         '/dashboard/:path*',
         '/verify/:path*',
         '/teachers',
-        '/home'
+        '/home',
+        '/:path*/profile',
+        // new line 28-9-2024
         
     ]
 };
